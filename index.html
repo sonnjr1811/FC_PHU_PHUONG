@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Phú Phương Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+    
+    <div class="app-container">
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <div class="logo"><i class="fa-solid fa-futbol"></i></div>
+                <h2>FC Phú Phương</h2>
+            </div>
+            
+            <ul class="nav-links" id="main-nav">
+                <li><a href="#" data-view="dashboard" class="active"><i class="fa-solid fa-chart-pie"></i> Tổng Quan</a></li>
+                <li><a href="#" data-view="players"><i class="fa-solid fa-users"></i> Đội Hình</a></li>
+                <li><a href="#" data-view="matches"><i class="fa-solid fa-calendar-days"></i> Lịch Thi Đấu</a></li>
+                <li><a href="#" data-view="funds"><i class="fa-solid fa-sack-dollar"></i> Quỹ Đội</a></li>
+                <li><a href="#" data-view="album"><i class="fa-solid fa-images"></i> Ảnh Kỉ Niệm</a></li>
+                <br/><hr style="border-color: rgba(255,255,255,0.1)"/><br/>
+                <li><a href="#" data-view="settings"><i class="fa-solid fa-gear"></i> Cài Đặt</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="page-title">Tổng Quan</h1>
+                <div id="auth-area" class="user-info"></div>
+            </header>
+
+            <div id="view-container" class="view-container">
+                </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-content glass-panel" style="max-width: 350px;">
+            <h3 style="margin-bottom:20px; text-align:center;">Quản Trị Viên</h3>
+            <form id="login-form-submit">
+                <div class="form-group">
+                    <label>Tài khoản</label>
+                    <input type="text" id="login-user" class="form-control" required placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="login-pass" class="form-control" required placeholder="******">
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('login-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Đăng Nhập</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
