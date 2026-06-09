@@ -4,12 +4,12 @@ header('Content-Type: application/json');
 include 'db.php';
 
 // Kiểm tra quyền
-if (!isset($_SESSION['admin_logged_in'])) {
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     die(json_encode(["success" => false, "message" => "Hết phiên làm việc!"]));
 }
 
 $data = json_decode(file_get_contents("php://input"), true);
-$newPass = trim($data['password']);
+$newPass = trim($data['password'] ?? '');
 $currentUser = $_SESSION['admin_user']; // Tên user đang đăng nhập
 
 if (empty($newPass)) {
@@ -17,7 +17,8 @@ if (empty($newPass)) {
 }
 
 try {
-    $stmt = $conn->prepare("UPDATE admins SET password = ? WHERE username = ?");
+    // Sử dụng bảng users thay thế bảng admins
+    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE username = ?");
     $stmt->execute([$newPass, $currentUser]);
     
     echo json_encode(["success" => true, "message" => "Đổi mật khẩu thành công!"]);

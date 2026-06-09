@@ -21,12 +21,12 @@ try {
     $album = $conn->query("SELECT * FROM album ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 
     // 6. LẤY DỮ LIỆU QUỸ & TÍNH TOÁN SỐ DƯ
-    $transactions = $conn->query("SELECT * FROM transactions ORDER BY date DESC")->fetchAll(PDO::FETCH_ASSOC);
+    $transactions = $conn->query("SELECT * FROM funds ORDER BY date DESC")->fetchAll(PDO::FETCH_ASSOC);
     
     $totalIncome = 0;
     $totalExpense = 0;
     foreach ($transactions as $t) {
-        if ($t['type'] == 'income') {
+        if ($t['type'] == 'income' || $t['type'] == 'thu') {
             $totalIncome += $t['amount'];
         } else {
             $totalExpense += $t['amount'];

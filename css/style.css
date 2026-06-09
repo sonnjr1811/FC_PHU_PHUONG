@@ -323,6 +323,106 @@ button {
 .stat-icon.secondary { background: rgba(59, 130, 246, 0.15); color: var(--accent-secondary); }
 .stat-icon.warning { background: rgba(245, 158, 11, 0.15); color: var(--accent-warning); }
 
+/* Custom layout for Dashboard */
+.dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dashboard-grid-bottom {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.next-match-card {
+    display: block;
+    width: 100%;
+}
+
+.next-match-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.next-match-content .match-teams {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 2;
+    min-width: 280px;
+}
+
+.next-match-content .team-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-family: var(--font-heading);
+}
+
+.next-match-content .team-name.home {
+    color: var(--text-primary);
+}
+
+.next-match-content .team-name.away {
+    color: var(--accent-secondary);
+}
+
+.next-match-content .vs-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 0.9rem;
+    background: rgba(16,185,129,0.15);
+    color: var(--accent-primary);
+    border-radius: 6px;
+    font-weight: 800;
+}
+
+.next-match-content .match-details {
+    flex: 1;
+    min-width: 200px;
+    border-left: 2px solid rgba(255, 255, 255, 0.05);
+    padding-left: 20px;
+}
+
+.next-match-content .match-time {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.next-match-content .match-time i {
+    color: var(--accent-primary);
+    margin-right: 8px;
+}
+
+.next-match-content .match-stadium {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.next-match-content .match-stadium i {
+    color: var(--accent-danger);
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .next-match-content .match-details {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 5px;
+    }
+    .next-match-content .team-name {
+        font-size: 1.4rem;
+    }
+}
+
 /* Common Empty State */
 .empty-state {
     text-align: center;
@@ -374,13 +474,27 @@ button {
     border: none;
     color: var(--text-secondary);
     font-size: 1rem;
-    margin-right: 0.5rem;
-    transition: color var(--transition-fast);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.action-btn:hover { color: var(--text-primary); }
-.action-btn.edit:hover { color: var(--accent-secondary); }
-.action-btn.delete:hover { color: var(--accent-danger); }
+.action-btn:hover { 
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary); 
+}
+.action-btn.edit:hover { 
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-secondary); 
+}
+.action-btn.delete:hover { 
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--accent-danger); 
+}
 
 /* =========================================================================
    Forms & Modals
@@ -412,8 +526,41 @@ button {
     max-width: 500px;
     padding: 2rem;
     transform: translateY(20px);
-    transition: transform var(--transition-fast);
+    transition: transform var(--transition-fast), max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.edit-match-layout {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 8px;
+    margin-right: -8px; /* Tối ưu hóa vùng hiển thị */
+}
+
+/* Custom scrollbar cho layout form */
+.edit-match-layout::-webkit-scrollbar {
+    width: 5px;
+}
+.edit-match-layout::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+.edit-match-layout::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+body.light-theme .edit-match-layout::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.08);
 }
 
 .modal-overlay.active .modal-content {
@@ -499,5 +646,764 @@ button {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
+}
+
+/* Theme Configuration for Buttons */
+.active-theme-btn {
+    background: var(--accent-primary) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px var(--accent-primary-glow) !important;
+}
+
+/* Light Theme overrides */
+body.light-theme {
+    --bg-dark: #f8fafc; /* Slate 50 */
+    --bg-darker: #f1f5f9; /* Slate 100 */
+    --bg-card: rgba(255, 255, 255, 0.75); /* White with opacity */
+    --bg-card-hover: rgba(255, 255, 255, 0.9);
+
+    --text-primary: #0f172a; /* Slate 900 */
+    --text-secondary: #475569; /* Slate 600 */
+    --text-muted: #94a3b8; /* Slate 400 */
+
+    --glass-border: 1px solid rgba(15, 23, 42, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
+}
+
+body.light-theme {
+    font-family: var(--font-body);
+    background-color: var(--bg-darker);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.04), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.04), transparent 25%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+}
+
+body.light-theme .sidebar-header h2 {
+    background: linear-gradient(to right, #0f172a, #475569);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .form-control {
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-theme .form-control:focus {
+    border-color: var(--accent-primary);
+}
+
+body.light-theme .btn-secondary {
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--text-primary);
+}
+
+body.light-theme .btn-secondary:hover {
+    background: rgba(15, 23, 42, 0.1);
+}
+
+body.light-theme .nav-links a:hover {
+    background: rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .data-table tr:hover td {
+    background: rgba(15, 23, 42, 0.02);
+}
+
+body.light-theme hr {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-theme .modal-content {
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .action-btn:hover { 
+    background: rgba(15, 23, 42, 0.05);
+}
+
+body.light-theme .settings-divider {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* =========================================================================
+   Player Performance Stats & Form Styles
+   ========================================================================= */
+.performance-widget {
+    transition: transform var(--transition-fast);
+}
+.performance-widget:hover {
+    transform: translateY(-2px);
+}
+.perf-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary) !important;
+}
+body.light-theme .perf-tab-btn:hover {
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--text-primary) !important;
+}
+.perf-tab-btn.active {
+    background: var(--accent-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 10px var(--accent-primary-glow);
+}
+.perf-row input.form-control {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all var(--transition-fast);
+}
+.perf-row input.form-control:focus {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: var(--accent-primary);
+}
+body.light-theme .perf-row input.form-control {
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    color: var(--text-primary);
+}
+body.light-theme .perf-row input.form-control:focus {
+    background: #fff;
+    border-color: var(--accent-primary);
+}
+/* Tuỳ chỉnh thanh cuộn cho danh sách phong độ cầu thủ trong modal */
+#performance-players-list::-webkit-scrollbar {
+    width: 6px;
+}
+#performance-players-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+#performance-players-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+}
+#performance-players-list::-webkit-scrollbar-thumb:hover {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    transition: background var(--transition-fast);
+}
+
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Badges */
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.badge.active { background: rgba(16, 185, 129, 0.15); color: var(--accent-primary); border: 1px solid rgba(16, 185, 129, 0.3);}
+.badge.inactive { background: rgba(245, 158, 11, 0.15); color: var(--accent-warning); border: 1px solid rgba(245, 158, 11, 0.3);}
+
+/* View Headers */
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Theme Configuration for Buttons */
+.active-theme-btn {
+    background: var(--accent-primary) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px var(--accent-primary-glow) !important;
+}
+
+/* Light Theme overrides */
+body.light-theme {
+    --bg-dark: #f8fafc; /* Slate 50 */
+    --bg-darker: #f1f5f9; /* Slate 100 */
+    --bg-card: rgba(255, 255, 255, 0.75); /* White with opacity */
+    --bg-card-hover: rgba(255, 255, 255, 0.9);
+
+    --text-primary: #0f172a; /* Slate 900 */
+    --text-secondary: #475569; /* Slate 600 */
+    --text-muted: #94a3b8; /* Slate 400 */
+
+    --glass-border: 1px solid rgba(15, 23, 42, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
+}
+
+body.light-theme {
+    font-family: var(--font-body);
+    background-color: var(--bg-darker);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.04), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.04), transparent 25%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+}
+
+body.light-theme .sidebar-header h2 {
+    background: linear-gradient(to right, #0f172a, #475569);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .form-control {
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-theme .form-control:focus {
+    border-color: var(--accent-primary);
+}
+
+body.light-theme .btn-secondary {
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--text-primary);
+}
+
+body.light-theme .btn-secondary:hover {
+    background: rgba(15, 23, 42, 0.1);
+}
+
+body.light-theme .nav-links a:hover {
+    background: rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .data-table tr:hover td {
+    background: rgba(15, 23, 42, 0.02);
+}
+
+body.light-theme hr {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-theme .modal-content {
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .action-btn:hover { 
+    background: rgba(15, 23, 42, 0.05);
+}
+
+body.light-theme .settings-divider {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* =========================================================================
+   Player Performance Stats & Form Styles
+   ========================================================================= */
+.performance-widget {
+    transition: transform var(--transition-fast);
+}
+.performance-widget:hover {
+    transform: translateY(-2px);
+}
+.perf-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary) !important;
+}
+body.light-theme .perf-tab-btn:hover {
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--text-primary) !important;
+}
+.perf-tab-btn.active {
+    background: var(--accent-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 10px var(--accent-primary-glow);
+}
+.perf-row input.form-control {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all var(--transition-fast);
+}
+.perf-row input.form-control:focus {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: var(--accent-primary);
+}
+body.light-theme .perf-row input.form-control {
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    color: var(--text-primary);
+}
+body.light-theme .perf-row input.form-control:focus {
+    background: #fff;
+    border-color: var(--accent-primary);
+}
+/* Tuỳ chỉnh thanh cuộn cho danh sách phong độ cầu thủ trong modal */
+#performance-players-list::-webkit-scrollbar {
+    width: 6px;
+}
+#performance-players-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+#performance-players-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+}
+#performance-players-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.25);
+}
+body.light-theme #performance-players-list::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.1);
+}
+body.light-theme #performance-players-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 23, 42, 0.2);
+}
+
+/* Responsive cho cột phong độ cầu thủ trong modal cập nhật trận đấu */
+@media (max-width: 768px) {
+    #edit-match-performance-section {
+        border-left: none !important;
+        padding-left: 0 !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        padding-top: 15px !important;
+        margin-top: 15px !important;
+    }
+    body.light-theme #edit-match-performance-section {
+        border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+    }
+}
+
+/* =========================================================================
+   Toast Notification System
+   ========================================================================= */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+.toast {
+    pointer-events: auto;
+    padding: 12px 20px;
+    border-radius: 8px;
+    min-width: 280px;
+    max-width: 400px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    cursor: pointer;
+}
+.toast.active {
+    transform: translateX(0);
+    opacity: 1;
+}
+.toast-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9));
+}
+.toast-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9));
+}
+.toast-warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9));
+}
+.toast i {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+.toast span {
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+/* =========================================================================
+   PHÂN HỆ: SA BÀN CHIẾN THUẬT & ĐIỂM DANH (LINEUP & ATTENDANCE)
+   ========================================================================= */
+.lineup-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+@media (min-width: 992px) {
+    .lineup-layout {
+        grid-template-columns: 380px 1fr;
+    }
+}
+
+/* Cột Điểm Danh */
+.attendance-card {
+    display: flex;
+    flex-direction: column;
+    max-height: 750px;
+}
+
+.attendance-header-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 15px;
+}
+
+.summary-item-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.attendance-scroll-list {
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 5px;
+}
+
+.attendance-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background var(--transition-fast);
+}
+
+.attendance-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.attendance-player-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.attendance-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.attendance-name-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.attendance-shirt-num {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.attendance-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.att-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.att-btn:hover {
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.att-btn.going.active { background-color: var(--accent-primary); color: #fff; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
+.att-btn.late.active { background-color: var(--accent-warning); color: #fff; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+.att-btn.absent.active { background-color: var(--accent-danger); color: #fff; box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); }
+.att-btn.no-response.active { background-color: var(--text-muted); color: #fff; }
+
+.att-note-input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    margin-top: 5px;
+    width: 100%;
+    outline: none;
+}
+
+.att-note-input:focus {
+    border-color: var(--accent-secondary);
+}
+
+/* Cột Sa Bàn Chiến Thuật */
+.tactics-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.pitch-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    max-width: 750px;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #15803d, #14532d);
+    border-radius: 12px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4), var(--glass-shadow);
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Kẻ Vạch Sân Bóng */
+.pitch-center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    aspect-ratio: 1;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.pitch-center-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+.pitch-center-spot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.pitch-penalty-area-top {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 60%;
+    height: 18%;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+    border-right: 2px solid rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+.pitch-penalty-area-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 18%;
+    border-top: 2px solid rgba(255, 255, 255, 0.4);
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+    border-right: 2px solid rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+/* Các chấm cầu thủ trên sa bàn */
+.player-token {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--bg-darker);
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(16, 185, 129, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.player-token.draggable {
+    cursor: grab;
+}
+
+.player-token.draggable:active {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(16, 185, 129, 0.6);
+    z-index: 100;
+}
+
+.player-token-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.player-token-no-avatar {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.player-token-label {
+    position: absolute;
+    bottom: -22px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+/* Vùng ghế dự bị */
+.bench-wrapper {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.bench-title {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bench-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-height: 60px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: var(--border-radius-sm);
+    padding: 10px;
+}
+
+.bench-player-node {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-fast);
+}
+
+.bench-player-node.draggable {
+    cursor: grab;
+    user-select: none;
+}
+
+.bench-player-node.draggable:hover {
+    transform: translateY(-2px);
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.bench-player-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.bench-player-shirt {
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+.lineup-instructions {
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 3px solid var(--accent-secondary);
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.lineup-instructions p {
+    margin: 3px 0;
 }
 

@@ -6,7 +6,7 @@
     <title>FC Phú Phương Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
 </head>
 <body class="dark-theme">
     
@@ -59,6 +59,312 @@
         </div>
     </div>
 
-    <script type="module" src="js/app.js"></script>
+    <!-- Modal: Thêm Cầu Thủ -->
+    <div class="modal-overlay" id="player-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px;">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-user-plus"></i> Thêm Cầu Thủ</h3>
+            <form id="player-form-submit" novalidate>
+                <div class="form-group">
+                    <label>Họ và Tên</label>
+                    <input type="text" id="player-name" class="form-control" required placeholder="Nguyễn Văn A">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Số Áo</label>
+                        <input type="number" id="player-shirt" class="form-control" placeholder="10">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Vị Trí</label>
+                        <select id="player-position" class="form-control">
+                            <option value="Thủ môn">Thủ môn</option>
+                            <option value="Hậu vệ">Hậu vệ</option>
+                            <option value="Tiền vệ">Tiền vệ</option>
+                            <option value="Tiền đạo">Tiền đạo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Số Điện Thoại</label>
+                    <input type="text" id="player-phone" class="form-control" placeholder="0987654321" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label>Ảnh Đại Diện</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="file" id="player-avatar-file" class="form-control" accept="image/*" style="flex: 1;">
+                        <input type="text" id="player-avatar" class="form-control" placeholder="URL ảnh đại diện" style="flex: 1;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Ngày Gia Nhập</label>
+                        <input type="date" id="player-joindate" class="form-control">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Trạng Thái</label>
+                        <select id="player-status" class="form-control">
+                            <option value="Active">Hoạt động</option>
+                            <option value="Injured">Chấn thương</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('player-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Sửa Cầu Thủ -->
+    <div class="modal-overlay" id="edit-player-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px;">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-user-pen"></i> Chỉnh Sửa Cầu Thủ</h3>
+            <form id="edit-player-form-submit" novalidate>
+                <input type="hidden" id="edit-player-id">
+                <div class="form-group">
+                    <label>Họ và Tên</label>
+                    <input type="text" id="edit-player-name" class="form-control" required placeholder="Nguyễn Văn A">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Số Áo</label>
+                        <input type="number" id="edit-player-shirt" class="form-control" placeholder="10">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Vị Trí</label>
+                        <select id="edit-player-position" class="form-control">
+                            <option value="Thủ môn">Thủ môn</option>
+                            <option value="Hậu vệ">Hậu vệ</option>
+                            <option value="Tiền vệ">Tiền vệ</option>
+                            <option value="Tiền đạo">Tiền đạo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Số Điện Thoại</label>
+                    <input type="text" id="edit-player-phone" class="form-control" placeholder="0987654321" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label>Ảnh Đại Diện</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="file" id="edit-player-avatar-file" class="form-control" accept="image/*" style="flex: 1;">
+                        <input type="text" id="edit-player-avatar" class="form-control" placeholder="URL ảnh đại diện" style="flex: 1;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Ngày Gia Nhập</label>
+                        <input type="date" id="edit-player-joindate" class="form-control">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Trạng Thái</label>
+                        <select id="edit-player-status" class="form-control">
+                            <option value="Active">Hoạt động</option>
+                            <option value="Injured">Chấn thương</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('edit-player-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Thêm Trận Đấu -->
+    <div class="modal-overlay" id="match-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px;">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-calendar-plus"></i> Thêm Trận Đấu</h3>
+            <form id="match-form-submit">
+                <div class="form-group">
+                    <label>Đối Thủ</label>
+                    <input type="text" id="match-opponent" class="form-control" required placeholder="FC Bạn Hữu">
+                </div>
+                <div class="form-group">
+                    <label>Thời Gian</label>
+                    <input type="datetime-local" id="match-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Địa Điểm (Sân)</label>
+                    <input type="text" id="match-stadium" class="form-control" required placeholder="Sân Thượng Định">
+                </div>
+                <div style="display: none; gap: 10px; align-items: center; margin-top: 15px;" id="add-match-score-group">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Tỉ số FC Phú Phương</label>
+                        <input type="number" id="match-our-score" class="form-control" min="0" placeholder="0">
+                    </div>
+                    <div style="margin-top: 15px; font-weight: bold;">-</div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Tỉ số Đối Thủ</label>
+                        <input type="number" id="match-opp-score" class="form-control" min="0" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('match-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Sửa Trận Đấu -->
+    <div class="modal-overlay" id="edit-match-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px; transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-calendar-check"></i> Cập Nhật Trận Đấu</h3>
+            <form id="edit-match-form-submit">
+                <div class="edit-match-layout" style="display: flex; gap: 20px; flex-wrap: wrap; overflow-y: auto; flex-grow: 1; max-height: 55vh; padding-right: 4px;">
+                    
+                    <!-- Cột Trái: Thông tin cơ bản & Tỉ số -->
+                    <div class="edit-match-info-col" style="flex: 1; min-width: 280px;">
+                        <input type="hidden" id="edit-match-id">
+                        <div class="form-group">
+                            <label>Đối Thủ</label>
+                            <input type="text" id="edit-match-opponent" class="form-control" required placeholder="FC Bạn Hữu">
+                        </div>
+                        <div class="form-group">
+                            <label>Thời Gian</label>
+                            <input type="datetime-local" id="edit-match-date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa Điểm (Sân)</label>
+                            <input type="text" id="edit-match-stadium" class="form-control" required placeholder="Sân Thượng Định">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Trạng Thái</label>
+                                <select id="edit-match-status" class="form-control">
+                                    <option value="Upcoming">Sắp diễn ra</option>
+                                    <option value="Finished">Đã kết thúc</option>
+                                    <option value="Postponed">Đã hoãn</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="flex: 2;">
+                                <label id="edit-match-note-label">Ghi Chú</label>
+                                <input type="text" id="edit-match-note" class="form-control" placeholder="Ghi chú trận đấu">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center;" id="edit-match-score-group">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Tỉ số FC Phú Phương</label>
+                                <input type="number" id="edit-match-our-score" class="form-control" min="0" placeholder="0">
+                            </div>
+                            <div style="margin-top: 15px; font-weight: bold;">-</div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Tỉ số Đối Thủ</label>
+                                <input type="number" id="edit-match-opp-score" class="form-control" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cột Phải: Nhập phong độ cầu thủ (chỉ hiển thị khi Trạng thái là Finished) -->
+                    <div id="edit-match-performance-section" style="display: none; flex: 1.2; min-width: 320px; border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 10px; font-size: 0.9rem; color: var(--accent-primary);">
+                            <i class="fa-solid fa-chart-line"></i> Phong độ cầu thủ trận này
+                        </label>
+                        <div id="performance-players-list" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px;">
+                            <!-- Danh sách cầu thủ được JS tự động render -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('edit-match-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Thêm Giao Dịch Quỹ -->
+    <div class="modal-overlay" id="fund-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px;">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-money-bill-transfer"></i> Thêm Thu / Chi</h3>
+            <form id="fund-form-submit">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Loại Giao Dịch</label>
+                        <select id="fund-type" class="form-control">
+                            <option value="thu">Thu (Quỹ đóng, tài trợ...)</option>
+                            <option value="chi">Chi (Tiền sân, nước uống...)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Số Tiền (VNĐ)</label>
+                        <input type="number" id="fund-amount" class="form-control" required placeholder="100000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ngày Giao Dịch</label>
+                    <input type="date" id="fund-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Nội Dung</label>
+                    <input type="text" id="fund-description" class="form-control" required placeholder="Ví dụ: Đóng quỹ tháng 6">
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('fund-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Sửa Giao Dịch Quỹ -->
+    <div class="modal-overlay" id="edit-fund-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px;">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-money-bill-transfer"></i> Sửa Thu / Chi</h3>
+            <form id="edit-fund-form-submit">
+                <input type="hidden" id="edit-fund-id">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Loại Giao Dịch</label>
+                        <select id="edit-fund-type" class="form-control">
+                            <option value="thu">Thu (Quỹ đóng, tài trợ...)</option>
+                            <option value="chi">Chi (Tiền sân, nước uống...)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Số Tiền (VNĐ)</label>
+                        <input type="number" id="edit-fund-amount" class="form-control" required placeholder="100000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ngày Giao Dịch</label>
+                    <input type="date" id="edit-fund-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Nội Dung</label>
+                    <input type="text" id="edit-fund-description" class="form-control" required placeholder="Ví dụ: Đóng quỹ tháng 6">
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('edit-fund-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal: Thêm Ảnh Kỷ Niệm -->
+    <div class="modal-overlay" id="photo-modal">
+        <div class="modal-content glass-panel" style="max-width: 450px;">
+            <h3 style="margin-bottom:20px; text-align:center;"><i class="fa-solid fa-camera"></i> Thêm Ảnh Kỷ Niệm</h3>
+            <form id="photo-form-submit" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Tiêu Đề / Mô Tả</label>
+                    <input type="text" id="photo-title" class="form-control" required placeholder="Ví dụ: Giao lưu giải mùa hè">
+                </div>
+                <div class="form-group">
+                    <label>Chọn Ảnh Tải Lên</label>
+                    <input type="file" id="photo-file" class="form-control" accept="image/*" required>
+                </div>
+                <div class="form-actions" style="margin-top:20px; display:flex; gap:10px;">
+                    <button type="button" onclick="document.getElementById('photo-modal').classList.remove('active')" class="btn-secondary" style="flex:1;">Hủy</button>
+                    <button type="submit" class="btn-primary" style="flex:1;">Tải Lên</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js?v=2.2"></script>
 </body>
 </html>

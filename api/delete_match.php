@@ -9,10 +9,11 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     die(json_encode(["success" => false, "message" => "Bạn không có quyền thực hiện thao tác này"]));
 }
 
-if (isset($_GET['id'])) {
+$id = $_GET['id'] ?? null;
+if ($id) {
     try {
-        $stmt = $conn->prepare("DELETE FROM funds WHERE id = ?");
-        $stmt->execute([$_GET['id']]);
+        $stmt = $conn->prepare("DELETE FROM matches WHERE id = ?");
+        $stmt->execute([$id]);
         echo json_encode(["success" => true]);
     } catch (PDOException $e) {
         http_response_code(500);

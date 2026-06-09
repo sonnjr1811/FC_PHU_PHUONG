@@ -5,6 +5,14 @@ include 'db.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
+if (!$data) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Không nhận được dữ liệu"
+    ]);
+    exit;
+}
+
 $username = trim($data['username'] ?? '');
 $password = trim($data['password'] ?? '');
 

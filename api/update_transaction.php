@@ -1,30 +1,25 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 include 'db.php';
+
+// Bảo mật: Chỉ admin mới được thực hiện
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    http_response_code(403);
+    die(json_encode(["success" => false, "message" => "Bạn không có quyền thực hiện thao tác này"]));
+}
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!empty($data['id'])) {
     try {
-        // 1. Lấy dữ liệu cũ trước khi sửa để lưu vết
-        $old = $conn->prepare("SELECT amount, description, type FROM transactions WHERE id = ?");
-        $old->execute([$data['id']]);
-        $oldItem = $old->fetch(PDO::FETCH_ASSOC);
-        
-        $oldText = "Số tiền: " . $oldItem['amount'] . " | Loại: " . $oldItem['type'] . " | Nội dung: " . $oldItem['description'];
-
-        // 2. Cập nhật dữ liệu mới và ghi đè vào cột old_content
-        $sql = "UPDATE transactions SET 
-                type = ?, amount = ?, date = ?, description = ?, 
-                updated_at = NOW(), 
-                old_content = ? 
-                WHERE id = ?";
+        $sql = "UPDATE funds SET type = ?, amount = ?, date = ?, description = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([
             $data['type'], 
             $data['amount'], 
-            $data['date'], 
+            $data['date'] ?: date('Y-m-d H:i:s'), 
             $data['description'],
-            $oldText,
             $data['id']
         ]);
         
